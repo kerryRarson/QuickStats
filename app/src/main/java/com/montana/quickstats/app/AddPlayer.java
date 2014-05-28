@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -25,6 +26,15 @@ public class AddPlayer extends ActionBarActivity {
                 AddPlayer.this.startActivity(mainPage);
             }
         });
+
+        //Load the pounds dropdown
+        Spinner cboPounds = (Spinner)findViewById(R.id.cboWgt);
+        String aLbls[] = new String[200];
+        for(int i=0; i<aLbls.length; i++){
+            aLbls[i] = "" + (i+100);
+        }
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, aLbls);
+        cboPounds.setAdapter(adapter);
     }
 
 

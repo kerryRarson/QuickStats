@@ -41,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
             StringBuffer buffer = new StringBuffer();
             line = input.readLine();
             if (line.length() > 0){
+//TODO load the player list into a listView
                 Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
                 //delete it
                 File dir = getFilesDir();

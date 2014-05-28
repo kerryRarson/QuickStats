@@ -14,27 +14,103 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="Name"
         android:ems="10"
         android:id="@+id/editText"
+		android:hint="Player Name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp" />
 
-    <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pos"
-        android:layout_marginTop="18dp"
-        android:entries="@array/positions"
-        android:layout_below="@+id/editText"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/posLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/pos"
->
+        android:layout_below="@+id/editText">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:id="@+id/posLabel"
+                android:text="@string/label_pos"
+                android:layout_gravity="center_vertical" />
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/cboPos"
+                android:layout_margin="5dp"
+                android:entries="@array/positions"
+                android:layout_gravity="center_vertical" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/txtTeam"
+        android:hint="Team"
+        android:layout_below="@+id/posLayout"
+        android:layout_margin="5dp"
+        android:inputType="textPersonName"/>
+    <RelativeLayout
+        android:id="@+id/hgtLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTeam">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/hgtLabel"
+                android:text="@string/label_hgt"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical" />
+            <Spinner
+                android:layout_height="wrap_content"
+                android:id="@+id/cboFeet"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:entries="@array/feet"/>
+            <Spinner
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/cboInches"
+                android:entries="@array/inches"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/wgtLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/hgtLayout">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/wgtLabel"
+                android:text="@string/label_wgt"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_gravity="center_vertical" />
+            <Spinner
+                android:layout_height="wrap_content"
+                android:id="@+id/cboWgt"
+                android:layout_weight="1"
+                android:layout_width="0dp"/>
+        </LinearLayout>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="bottom"
+        android:layout_below="@+id/wgtLayout">
         <Button
             android:layout_height="wrap_content"
             android:layout_weight="1"
