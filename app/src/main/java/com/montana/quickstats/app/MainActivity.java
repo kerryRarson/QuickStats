@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -36,20 +38,29 @@ public class MainActivity extends ActionBarActivity {
         final Intent addPlayerPage = new Intent(MainActivity.this, AddPlayer.class);
 
         try{
+            boolean havePlayers = false;
             input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
             StringBuffer buffer = new StringBuffer();
-            line = input.readLine();
-            if (line.length() > 0){
 //TODO load the player list into a listView
+            ArrayList<Player> playerList = new ArrayList<Player>();
+            while ((line = input.readLine()) != null) {
+                havePlayers = true;
+                Player p = new Player();
+                p.Deserialize(line);
+                playerList.add(p);
+            }
+            if ( havePlayers ){
                 Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
-                //delete it
-                //File dir = getFilesDir();
-                //File file = new File(dir, FILENAME);
-                //file.delete();
+                ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, playerList);
+                ListView lv = (ListView)findViewById(R.id.lvPlayers);
+                lv.setAdapter(adapter);
+            } else {
+                MainActivity.this.startActivity(addPlayerPage);
             }
         }
         catch ( Exception e ){
             Toast.makeText(getApplicationContext(), "no players!", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
             MainActivity.this.startActivity(addPlayerPage);
         }
         finally {

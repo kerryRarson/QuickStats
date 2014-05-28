@@ -95,10 +95,11 @@ public class AddPlayer extends ActionBarActivity {
         Spinner cboFeet = (Spinner)findViewById(R.id.cboFeet);
         Spinner cboInches = (Spinner)findViewById(R.id.cboInches);
         Spinner cboWgt = (Spinner)findViewById(R.id.cboWgt);
+        EditText txtSpd = (EditText)findViewById(R.id.txtSpd);
 
         String hgt = cboFeet.getSelectedItem().toString() + "."+  cboInches.getSelectedItem().toString();
 
-        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), "");
+        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), txtSpd.getText().toString());
 
         try {
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
