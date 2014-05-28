@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -29,13 +30,11 @@ public class MainActivity extends ActionBarActivity {
         //If there are players, display them in a list.
         //If not go to the Add Player activity
 
-        //String[] players = getResources().getStringArray(R.array.players);
-        //if (players.length == 0){
-           //Toast.makeText(getApplicationContext(), "HERE!", Toast.LENGTH_SHORT).show();
-        //}
         String line;
         BufferedReader input = null;
         String FILENAME = getResources().getString(R.string.file_players);
+        final Intent addPlayerPage = new Intent(MainActivity.this, AddPlayer.class);
+
         try{
             input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
             StringBuffer buffer = new StringBuffer();
@@ -51,7 +50,6 @@ public class MainActivity extends ActionBarActivity {
         }
         catch ( Exception e ){
             Toast.makeText(getApplicationContext(), "no players!", Toast.LENGTH_SHORT).show();
-            Intent addPlayerPage = new Intent(MainActivity.this, AddPlayer.class);
             MainActivity.this.startActivity(addPlayerPage);
         }
         finally {
@@ -61,6 +59,14 @@ public class MainActivity extends ActionBarActivity {
                 e.printStackTrace();
             }
         }
+
+        Button btnAdd = (Button)findViewById(R.id.btnAdd);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.startActivity(addPlayerPage);
+            }
+        });
     }
 
 
