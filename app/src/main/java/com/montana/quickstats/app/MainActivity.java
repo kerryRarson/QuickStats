@@ -53,17 +53,6 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "no players!", Toast.LENGTH_SHORT).show();
             Intent addPlayerPage = new Intent(MainActivity.this, AddPlayer.class);
             MainActivity.this.startActivity(addPlayerPage);
-            //create the file
-            try {
-
-                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
-                outputStreamWriter.write("Larsen, Kelley~CHI~5.09,170,13.25");
-                outputStreamWriter.close();
-            }
-            catch (IOException writeE) {
-                writeE.printStackTrace();
-            }
-
         }
         finally {
             try {

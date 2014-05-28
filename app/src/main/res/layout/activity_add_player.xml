@@ -110,6 +110,31 @@
     </RelativeLayout>
     <LinearLayout
         android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spdLayout"
+        android:orientation="horizontal"
+        android:layout_below="@id/wgtLayout">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spdLabel"
+            android:text="SPD"/>
+        <EditText
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtSpd"
+            />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnTimer"
+            android:text="@string/start"
+            android:padding="5dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:gravity="bottom"
         android:layout_below="@+id/wgtLayout">

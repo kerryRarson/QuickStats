@@ -2,6 +2,8 @@ package com.montana.quickstats.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
+import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,9 +16,18 @@ import android.widget.Spinner;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.logging.LogRecord;
 
 
 public class AddPlayer extends ActionBarActivity {
+    private EditText txtSpd;
+    private Button btnTimer;
+    private long startTime = 0L;
+    long timeInMilliseconds = 0L;
+    long timeSwapBuff = 0L;
+    long updatedTime = 0L;
+    private Handler timerHandler = new Handler();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +54,26 @@ public class AddPlayer extends ActionBarActivity {
 
             }
         });
+
+        //set up the timer start/stop button
+        //http://examples.javacodegeeks.com/android/core/os/handler/android-timer-example/
+        txtSpd = (EditText)findViewById(R.id.txtSpd);
+        btnTimer = (Button)findViewById(R.id.btnTimer);
+        btnTimer.setOnClickListener( new View.OnClickListener(){
+            public void onClick(View view) {
+                //If the button is running. stop the timer
+                if (btnTimer.getText() == getResources().getString(R.string.start)){
+                    //change the button caption & kick off the timer thread
+                    btnTimer.setText(getResources().getString(R.string.pause));
+
+                    startTime = SystemClock.uptimeMillis();
+                    timerHandler.postDelayed(updateTimerThread, 0);
+                } else {
+                    btnTimer.setText(getResources().getString(R.string.start));
+                    timerHandler.removeCallbacks(updateTimerThread);
+                }
+            }
+        } );
 
         //Load the pounds dropdown
         Spinner cboPounds = (Spinner)findViewById(R.id.cboWgt);
@@ -97,4 +128,20 @@ public class AddPlayer extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private Runnable updateTimerThread = new Runnable() {
+        @Override
+        public void run() {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            secs = secs % 60;
+            int milliseconds = (int) (updatedTime % 1000);
+            txtSpd.setText("" + mins + ":"
+             + String.format("%02d", secs) + ":"
+             + String.format("%03d", milliseconds));
+            timerHandler.postDelayed(this, 0);
+        }
+    };
 }
