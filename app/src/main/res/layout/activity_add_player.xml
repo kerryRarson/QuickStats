@@ -11,11 +11,11 @@
 
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/txtName"
 		android:hint="Player Name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp" />
@@ -25,7 +25,7 @@
         android:id="@+id/posLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText">
+        android:layout_below="@+id/txtName">
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -54,6 +54,7 @@
         android:hint="Team"
         android:layout_below="@+id/posLayout"
         android:layout_margin="5dp"
+        android:layout_marginBottom="18dp"
         android:inputType="textPersonName"/>
     <RelativeLayout
         android:id="@+id/hgtLayout"
@@ -87,6 +88,7 @@
     <RelativeLayout
         android:id="@+id/wgtLayout"
         android:layout_width="fill_parent"
+        android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/hgtLayout">
         <LinearLayout

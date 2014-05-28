@@ -44,9 +44,9 @@ public class MainActivity extends ActionBarActivity {
 //TODO load the player list into a listView
                 Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
                 //delete it
-                File dir = getFilesDir();
-                File file = new File(dir, FILENAME);
-                file.delete();
+                //File dir = getFilesDir();
+                //File file = new File(dir, FILENAME);
+                //file.delete();
             }
         }
         catch ( Exception e ){
