@@ -69,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
             }
         }
         catch ( Exception e ){
-            Toast.makeText(getApplicationContext(), "no players!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "no players!", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
             MainActivity.this.startActivity(addPlayerPage);
         }
@@ -123,6 +123,12 @@ public class MainActivity extends ActionBarActivity {
                     File dir = getFilesDir();
                     File file = new File(dir, FILENAME);
                     file.delete();
+                    //refresh the activity
+                    Intent intent = getIntent();
+                    finish();
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+
                 }
             }).start();
             return true;
