@@ -51,6 +51,8 @@ public class playerlistAdapter extends ArrayAdapter<Player> {
         playerName.setText(player.getPlayerName());
         hgt.setText(player.getHeight());
         wgt.setText(player.getWeight());
+        ((TextView)listView.findViewById(R.id.lblPos)).setText(player.getPosition());
+        ((TextView)listView.findViewById(R.id.spd)).setText(player.getSpeed());
 
         return listView;
     }

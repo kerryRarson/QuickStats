@@ -6,6 +6,7 @@ import android.os.SystemClock;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,12 +36,14 @@ public class AddPlayer extends ActionBarActivity {
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
     private Handler timerHandler = new Handler();
-
+    String FILENAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_player);
+
+        FILENAME = getResources().getString(R.string.file_players);
 
         //Home intent
         final Intent mainPage = new Intent(AddPlayer.this, MainActivity.class );
@@ -52,7 +55,7 @@ public class AddPlayer extends ActionBarActivity {
 
         //Hide it when in the HGT box
         EditText txtHgt = (EditText)findViewById(R.id.txtSpd);
-        imm.hideSoftInputFromWindow(txtHgt.getWindowToken(), 0);
+        txtHgt.setInputType(InputType.TYPE_NULL);
 
 
         Button btnCancel = (Button)findViewById(R.id.btnCancel);
@@ -106,7 +109,6 @@ public class AddPlayer extends ActionBarActivity {
     }
 
     private void savePlayer(){
-        String FILENAME = getResources().getString(R.string.file_players);
         EditText txtName = (EditText)findViewById(R.id.txtName);
         EditText txtTeam = (EditText)findViewById(R.id.txtTeam);
         Spinner cboPos = (Spinner)findViewById(R.id.cboPos);
@@ -116,25 +118,16 @@ public class AddPlayer extends ActionBarActivity {
         EditText txtSpd = (EditText)findViewById(R.id.txtSpd);
 
         String hgt = cboFeet.getSelectedItem().toString() + "."+  cboInches.getSelectedItem().toString();
-
-        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), txtSpd.getText().toString());
+        //strip off the leading 0
+        String spd = " ";
+        if (txtSpd.length() > 0 ) {
+            spd = txtSpd.getText().toString().substring(2);
+        }
+        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), spd);
 
         try {
             String line;
-            ArrayList<String> lines = new ArrayList<String>();
-            BufferedReader input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
-            try{
-                //StringBuffer buffer = new StringBuffer();
-                while ((line = input.readLine()) != null) {
-                    lines.add(line);
-                }
-            } catch (FileNotFoundException ex){
-                //no file yet
-                ex.printStackTrace();
-            } finally {
-                lines.add(player.Serialize());
-                input.close();
-            }
+            ArrayList<String> lines = addPlayerToFile(player);
 
             //write them all back to disk
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
@@ -153,6 +146,26 @@ public class AddPlayer extends ActionBarActivity {
         }
     }
 
+    private ArrayList<String> addPlayerToFile(Player player){
+        ArrayList<String> lines = new ArrayList<String>();
+        BufferedReader input = null;
+        try{
+            String line;
+            input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
+
+            //StringBuffer buffer = new StringBuffer();
+            while ((line = input.readLine()) != null) {
+                lines.add(line);
+            }
+            input.close();
+        } catch (IOException ex){
+            //no file yet
+            ex.printStackTrace();
+        } finally {
+            lines.add(player.Serialize());
+        }
+        return lines;
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -187,4 +200,5 @@ public class AddPlayer extends ActionBarActivity {
             timerHandler.postDelayed(this, 0);
         }
     };
+
 }

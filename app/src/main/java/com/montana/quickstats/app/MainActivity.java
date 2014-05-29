@@ -1,8 +1,10 @@
 package com.montana.quickstats.app;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -26,24 +28,26 @@ import java.util.ArrayList;
 public class MainActivity extends ActionBarActivity {
     ListView lstView;
     playerlistAdapter arrayAdapter;
+    ProgressDialog dlg;
+    String FILENAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //If there are players, display them in a list.
         //If not go to the Add Player activity
 
+        FILENAME = getResources().getString(R.string.file_players);
         String line;
         BufferedReader input = null;
-        String FILENAME = getResources().getString(R.string.file_players);
         final Intent addPlayerPage = new Intent(MainActivity.this, AddPlayer.class);
 
         try{
             boolean havePlayers = false;
             input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
             StringBuffer buffer = new StringBuffer();
-//TODO load the player list into a listView
             ArrayList<Player> playerList = new ArrayList<Player>();
             while ((line = input.readLine()) != null) {
                 havePlayers = true;
@@ -52,14 +56,9 @@ public class MainActivity extends ActionBarActivity {
                 playerList.add(p);
             }
             if ( havePlayers ){
-                //Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
-                //ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, playerList);
-                //ListView lv = (ListView)findViewById(R.id.lvPlayers);
-                //lv.setAdapter(adapter);
-
                 //Initialize ListView
                 ListView lv = (ListView)findViewById(R.id.lvPlayers);
-                //Initialize our array adapter notice how it references the listitems.xml layout
+                //Initialize our array adapter notice how it references the playerlistitems.xml layout
                 arrayAdapter = new playerlistAdapter(MainActivity.this, R.layout.playerlistitem,playerList);
 
                 //Set the above adapter as the adapter of choice for our list
@@ -106,6 +105,26 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if ( id == R.id.action_upload ){
+             dlg = ProgressDialog.show(this, "Uploading...", "Uploading Players & measurables to front office...");
+            new Thread( new Runnable() {
+                @Override
+                public void run() {
+                    //TODO sleep 5 seconds...
+                    SystemClock.sleep(5000);
+                    runOnUiThread( new Runnable() {
+                        @Override
+                        public void run() {
+                            dlg.dismiss();
+                        }
+                    });
+                    File dir = getFilesDir();
+                    File file = new File(dir, FILENAME);
+                    file.delete();
+                }
+            }).start();
             return true;
         }
         return super.onOptionsItemSelected(item);
