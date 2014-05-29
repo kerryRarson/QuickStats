@@ -24,6 +24,8 @@ import java.util.ArrayList;
 
 
 public class MainActivity extends ActionBarActivity {
+    ListView lstView;
+    playerlistAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +52,19 @@ public class MainActivity extends ActionBarActivity {
                 playerList.add(p);
             }
             if ( havePlayers ){
-                Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
-                ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, playerList);
+                //Toast.makeText(getApplicationContext(), "We've got  players!", Toast.LENGTH_SHORT).show();
+                //ArrayAdapter<Player> adapter = new ArrayAdapter<Player>(this, android.R.layout.simple_list_item_1, playerList);
+                //ListView lv = (ListView)findViewById(R.id.lvPlayers);
+                //lv.setAdapter(adapter);
+
+                //Initialize ListView
                 ListView lv = (ListView)findViewById(R.id.lvPlayers);
-                lv.setAdapter(adapter);
+                //Initialize our array adapter notice how it references the listitems.xml layout
+                arrayAdapter = new playerlistAdapter(MainActivity.this, R.layout.playerlistitem,playerList);
+
+                //Set the above adapter as the adapter of choice for our list
+                lv.setAdapter(arrayAdapter);
+
             } else {
                 MainActivity.this.startActivity(addPlayerPage);
             }

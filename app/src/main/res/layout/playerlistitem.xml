@@ -14,34 +14,30 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/measurableLayout">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/hgtLabel"
-        android:text="@string/label_hgt"
-        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/hgtLabel"
+            android:text="@string/label_hgt"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/hgt"
-            android:text=""/>
+            android:layout_toRightOf="@+id/hgtLabel"
+            android:text="xxx"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/lblWgt"
+            android:id="@+id/wgtLabel"
             android:text="@string/label_wgt"
             android:layout_toRightOf="@id/hgt"
             android:layout_marginLeft="6dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/lblWgt"
-            android:id="@+id/wgtLabel"
-            android:text="@string/label_wgt"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/wgtLabel"
+            android:text="YYY"
             android:id="@+id/wgt"/>
         <TextView
             android:layout_width="wrap_content"
@@ -53,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/spdLabel"
+            android:text="AAA.AA"
             android:id="@+id/spd"/>
 
     </RelativeLayout>

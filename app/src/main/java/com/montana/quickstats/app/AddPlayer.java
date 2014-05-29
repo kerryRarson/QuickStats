@@ -9,13 +9,21 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.LogRecord;
 
 
@@ -36,6 +44,16 @@ public class AddPlayer extends ActionBarActivity {
 
         //Home intent
         final Intent mainPage = new Intent(AddPlayer.this, MainActivity.class );
+
+        //show the keyboard on name
+        EditText txtName  = (EditText)findViewById(R.id.txtName);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(txtName, InputMethodManager.SHOW_IMPLICIT);
+
+        //Hide it when in the HGT box
+        EditText txtHgt = (EditText)findViewById(R.id.txtSpd);
+        imm.hideSoftInputFromWindow(txtHgt.getWindowToken(), 0);
+
 
         Button btnCancel = (Button)findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -102,12 +120,36 @@ public class AddPlayer extends ActionBarActivity {
         Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), txtSpd.getText().toString());
 
         try {
+            String line;
+            ArrayList<String> lines = new ArrayList<String>();
+            BufferedReader input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
+            try{
+                //StringBuffer buffer = new StringBuffer();
+                while ((line = input.readLine()) != null) {
+                    lines.add(line);
+                }
+            } catch (FileNotFoundException ex){
+                //no file yet
+                ex.printStackTrace();
+            } finally {
+                lines.add(player.Serialize());
+                input.close();
+            }
+
+            //write them all back to disk
             OutputStreamWriter outputStreamWriter = new OutputStreamWriter(openFileOutput(FILENAME, Context.MODE_PRIVATE));
-            outputStreamWriter.write(player.Serialize());
+            BufferedWriter bw = new BufferedWriter(outputStreamWriter);
+            for (String s: lines)
+                if (s.length() > 0){
+                    bw.write(s);
+                    bw.newLine();
+                }
+            bw.close();
             outputStreamWriter.close();
         }
         catch (IOException writeE) {
             writeE.printStackTrace();
+            Toast.makeText(getApplicationContext(), writeE.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
