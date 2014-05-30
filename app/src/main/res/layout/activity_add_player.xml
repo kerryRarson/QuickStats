@@ -124,7 +124,7 @@
             android:id="@+id/spdLabel"
             android:text="SPD"/>
         <EditText
-            android:layout_width="100dp"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/txtSpd"
