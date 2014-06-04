@@ -153,7 +153,6 @@ public class AddPlayer extends ActionBarActivity {
             String line;
             input = new BufferedReader(new InputStreamReader(openFileInput(FILENAME)));
 
-            //StringBuffer buffer = new StringBuffer();
             while ((line = input.readLine()) != null) {
                 lines.add(line);
             }
