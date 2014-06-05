@@ -97,14 +97,14 @@ public class AddPlayer extends ActionBarActivity {
         } );
 
         //Load the pounds dropdown
-        Spinner cboPounds = (Spinner)findViewById(R.id.cboWgt);
+        /*Spinner cboPounds = (Spinner)findViewById(R.id.cboWgt);
         String aLbls[] = new String[200];
         for(int i=0; i<aLbls.length; i++){
             aLbls[i] = "" + (i+100);
         }
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, aLbls);
         cboPounds.setAdapter(adapter);
-
+        */
 
     }
 
@@ -114,7 +114,7 @@ public class AddPlayer extends ActionBarActivity {
         Spinner cboPos = (Spinner)findViewById(R.id.cboPos);
         Spinner cboFeet = (Spinner)findViewById(R.id.cboFeet);
         Spinner cboInches = (Spinner)findViewById(R.id.cboInches);
-        Spinner cboWgt = (Spinner)findViewById(R.id.cboWgt);
+        EditText cboWgt = (EditText)findViewById(R.id.txtWeight);
         EditText txtSpd = (EditText)findViewById(R.id.txtSpd);
 
         String hgt = cboFeet.getSelectedItem().toString() + "."+  cboInches.getSelectedItem().toString();
@@ -123,7 +123,7 @@ public class AddPlayer extends ActionBarActivity {
         if (txtSpd.length() > 0 ) {
             spd = txtSpd.getText().toString().substring(2);
         }
-        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getSelectedItem().toString(), spd);
+        Player player = new Player(txtName.getText().toString(), txtTeam.getText().toString(), cboPos.getSelectedItem().toString(), hgt, cboWgt.getText().toString(), spd);
 
         try {
             String line;

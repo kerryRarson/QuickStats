@@ -105,11 +105,12 @@
                 android:layout_weight="0"
                 android:layout_width="40dp"
                 android:layout_gravity="center_vertical" />
-            <Spinner
+            <EditText
+                android:layout_width="110sp"
+                android:layout_weight="0"
                 android:layout_height="wrap_content"
-                android:id="@+id/cboWgt"
-                android:layout_weight="1"
-                android:layout_width="0dp"/>
+                android:id="@+id/txtWeight"
+                android:inputType="number"/>
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout
