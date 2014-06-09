@@ -118,6 +118,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/spdLayout"
         android:orientation="horizontal"
+        android:imeOptions="actionDone"
         android:layout_below="@id/wgtLayout">
         <TextView
             android:layout_width="wrap_content"
